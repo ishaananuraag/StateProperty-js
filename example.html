@@ -1,0 +1,143 @@
+<html>
+<head>
+
+<style>
+.main-container {
+    width: 100%;
+    height: 100%;
+    border-left: 8px solid #db9700;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 2rem;
+    padding-left: 10rem;
+	font-size: 2rem;
+    background: #f6feff;
+}
+.label-container:after {
+    content: ":";
+    position: absolute;
+    right: 0;
+}
+.label-container {
+    display: inline-block;
+    line-height: 1.5em;
+    width: 12em;
+    position: relative;
+	margin-right: 2em;
+}
+
+.input-container {
+    display: inline-block;
+    width: 10em;
+	position: relative;
+}
+input, button{
+	font-size: 1em
+}
+.input-container input[type="number"] {
+    width: 100%;
+}
+.form-item {
+    margin: 1rem;
+}
+button#convert {
+    padding: 0.5rem;
+    background: #ffeabc;
+    border-radius: 1rem;
+    position: absolute;
+    right: -8rem;
+}
+[type="radio"]{
+	width: 1em;
+    height: 1em;
+    vertical-align: middle;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="main-container">
+	<div class="form">
+		<div class="form-item">
+			<div class="label-container">
+				Celcius Value
+			</div>
+			<div class="input-container">
+				<input id="celcius-input" type="number" value="0"/>
+			</div>
+		</div>
+		
+		<div class="form-item">
+			<div class="label-container">
+				Farenhite Value
+			</div>
+			<div class="input-container">
+				<input id="farenhite-input" type="number" value="32"/>
+			</div>
+		</div>
+		
+		<div class="form-item">
+			<div class="label-container" style="vertical-align: top;">
+				Convert
+			</div>
+			<div  class="input-container" style="width: 24rem;">
+				<input  id="radio-toCelcius" type="radio" value="toCelcius" name="convert-direction" /> <div  class="input-container">To Celcius </div><br>
+				<input  id="radio-toFarenhite"  type="radio" value="toFarenhite" name="convert-direction" checked/> <div  class="input-container">To Farenhite</div>
+			</div>
+		</div>
+		
+		<br>
+		<div class="form-item">
+			<div class="input-container">
+				<button id="convert">Convert</button>
+			</div>
+		</div>
+	
+	</div>
+</div>
+
+<script src="./code/StateProperty.js"></script>
+<script>
+	
+	var Application={
+	}
+	
+	Object.defineStateProperty(Application,'convert',{
+		stateAttribute: 'direction',
+		values:{
+			toFarenhite: function(){
+				var celciusInput=document.getElementById('celcius-input');
+				var farenhiteInput=document.getElementById('farenhite-input');
+				farenhiteInput.value=((celciusInput.value * 1.8) + 32)
+			},
+			toCelcius: function(){
+				var celciusInput=document.getElementById('celcius-input');
+				var farenhiteInput=document.getElementById('farenhite-input');
+				celciusInput.value=(farenhiteInput.value - 32)/(1.8);
+			}
+		},
+		defaultState: 'toFarenhite',	
+	})
+	
+	
+	var changedirection=function(){
+			Application.direction=this.value	
+	}
+	
+	
+	document.getElementById('radio-toCelcius').onchange=changedirection;
+	document.getElementById('radio-toFarenhite').onchange=changedirection;
+	
+	document.getElementById('convert').onclick=function(){
+			Application.convert()
+	}
+	
+</script>
+
+</body>
+</html>
