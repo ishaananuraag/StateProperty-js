@@ -9,7 +9,7 @@
    if(typeof define === "function" && define.amd) {    
 	define(factory);
   } else {
-    window.IUI=factory();
+    factory();
   }
 })(function(){
 	
