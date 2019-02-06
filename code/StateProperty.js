@@ -22,7 +22,7 @@
 
 		return (function(object,valueAttribute,properties){
 			var stateAttribute=(properties.stateAttribute||'state'),
-				state=properties.defaultState || Object.keys(object)[0],
+				state=properties.defaultState || Object.keys(properties.values)[0],
 				map= Object.create(properties.values);
 
 			Object.defineProperty(object,(valueAttribute||'value'),{
